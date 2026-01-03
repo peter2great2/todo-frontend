@@ -133,13 +133,27 @@ export default function App() {
                     </button>
                   </div>
                 ) : (
-                  <>
-                    <div className="flex items-center gap-3">
-                      <FaCheckCircle className="text-emerald-500 text-lg" />
-                      <span className="text-slate-700">{todo.description}</span>
+                  <div className="flex items-center justify-between flex-1">
+                    <div className="flex items-center gap-3 flex-col">
+                      <div className="flex items-center gap-2">
+                        <div>
+                          <FaCheckCircle className="text-emerald-500 text-lg" />
+                        </div>
+                        <div>
+                          <span className="text-slate-700">
+                            {todo.description}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="self-start pl-6">
+                        <span className="text-slate-500 text-sm">
+                          {todo.created_at}
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="text-slate-400 transition flex items-center gap-2">
+                    <div className="text-slate-400 transition flex items-center gap-2 self-start">
                       <button
                         onClick={() => handleEdit(todo)}
                         className="hover:text-blue-500 transition p-1"
@@ -155,7 +169,7 @@ export default function App() {
                         <FaTrash />
                       </button>
                     </div>
-                  </>
+                  </div>
                 )}
               </li>
             ))}
