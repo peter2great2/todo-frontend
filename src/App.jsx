@@ -112,7 +112,13 @@ export default function App() {
           <FaClipboardList className="text-emerald-600 text-2xl" />
           <h1 className="text-2xl font-bold text-slate-800">My Todos</h1>
         </div>
-        <div className="flex gap-2 mb-6">
+        <form
+          className="flex gap-2 mb-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleAdd();
+          }}
+        >
           <input
             type="text"
             onChange={(e) => setText(e.target.value)}
@@ -121,12 +127,12 @@ export default function App() {
             className="flex-1 px-4 py-2 border border-slate-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
           />
           <button
-            onClick={handleAdd}
+            // onClick={handleAdd}
             className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
           >
             Add Task
           </button>
-        </div>
+        </form>
         {loading ? (
           <p className="text-center text-slate-500">Loading todos...</p>
         ) : todos.length === 0 ? (
