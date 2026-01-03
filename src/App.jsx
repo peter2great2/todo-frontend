@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import {
   FaCheckCircle,
   FaTrash,
@@ -32,7 +32,7 @@ export default function App() {
   }, []);
   const handleAdd = async () => {
     if (!text.trim()) {
-      toast.error("Field cannot be empty.");
+      toast.error("Please enter a task description.");
       return;
     }
     try {
@@ -82,6 +82,24 @@ export default function App() {
       toast.success("Todo updated successfully!");
       setEditingId(null);
       setEditText("");
+    } catch (error) {
+      console.error("Failed to update todo:", error.message);
+    }
+  };
+  const handleCompleted = async (todo) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/todos/update/${todo.todo_id}`,
+        { description: todo.description, completed: !todo.completed }
+      );
+      setTodos(
+        todos.map((t) =>
+          t.todo_id === todo.todo_id ? { ...t, completed: !t.completed } : t
+        )
+      );
+      toast.success(
+        `Todo marked as ${!todo.completed ? "completed" : "incomplete"}!`
+      );
     } catch (error) {
       console.error("Failed to update todo:", error.message);
     }
@@ -154,7 +172,20 @@ export default function App() {
                     <div className="flex flex-col gap-1">
                       <div className="flex items-center gap-2">
                         <div>
-                          <FaCheckCircle className="text-emerald-500 text-lg" />
+                          <FaCheckCircle
+                            className={`cursor-pointer ${
+                              todo.completed
+                                ? "text-emerald-500"
+                                : "text-slate-300 hover:text-slate-500 transition"
+                            }`}
+                            size={18}
+                            title={
+                              todo.completed
+                                ? "Mark as Incomplete"
+                                : "Mark as Completed"
+                            }
+                            onClick={() => handleCompleted(todo)}
+                          />
                         </div>
                         <div>
                           <span className="text-slate-700">
