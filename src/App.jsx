@@ -178,7 +178,7 @@ export default function App() {
         </div>
       </div>
       <div className="mt-4 text-center text-slate-500 flex justify-end pb-4  ">
-        <h4 className="capitalize text-sm md:text-2xl">
+        <h4 className="capitalize text-sm md:text-md">
           my first project using PostgresSQL for data management
         </h4>
       </div>
