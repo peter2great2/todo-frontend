@@ -31,6 +31,10 @@ export default function App() {
       });
   }, []);
   const handleAdd = async () => {
+    if (!text.trim()) {
+      toast.error("Field cannot be empty.");
+      return;
+    }
     try {
       const response = await axios.post("http://localhost:3000/todos/add", {
         description: text,
