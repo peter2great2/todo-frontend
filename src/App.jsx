@@ -5,12 +5,16 @@ import {
   FaTrash,
   FaClipboardList,
   FaEdit,
+  FaSave,
+  FaTimes,
 } from "react-icons/fa";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [text, setText] = useState("");
+  const [editingId, setEditingId] = useState(null);
+  const [editText, setEditText] = useState("");
 
   useEffect(() => {
     axios
@@ -44,6 +48,35 @@ export default function App() {
     }
   };
 
+  const handleEdit = (todo) => {
+    setEditingId(todo.todo_id);
+    setEditText(todo.description);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setEditText("");
+  };
+
+  const handleSaveEdit = async (todo) => {
+    if (!editText.trim()) return;
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/todos/update/${todo.todo_id}`,
+        { description: editText, completed: todo.completed }
+      );
+      setTodos(
+        todos.map((t) =>
+          t.todo_id === todo.todo_id ? { ...t, description: editText } : t
+        )
+      );
+      setEditingId(null);
+      setEditText("");
+    } catch (error) {
+      console.error("Failed to update todo:", error.message);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-100 flex items-center px-4 flex-col justify-between">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
@@ -66,7 +99,6 @@ export default function App() {
             Add
           </button>
         </div>
-        // Todo List
         {loading ? (
           <p className="text-center text-slate-500">Loading todos...</p>
         ) : (
@@ -76,18 +108,55 @@ export default function App() {
                 key={todo.todo_id}
                 className="flex items-center justify-between p-3 border rounded-lg hover:bg-slate-50 transition"
               >
-                <div className="flex items-center gap-3">
-                  <FaCheckCircle className="text-emerald-500 text-lg" />
-                  <span className="text-slate-700">{todo.description}</span>
-                </div>
+                {editingId === todo.todo_id ? (
+                  <div className="flex items-center gap-2 flex-1">
+                    <input
+                      type="text"
+                      value={editText}
+                      onChange={(e) => setEditText(e.target.value)}
+                      className="flex-1 px-3 py-1 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      autoFocus
+                    />
+                    <button
+                      onClick={() => handleSaveEdit(todo)}
+                      className="text-emerald-500 hover:text-emerald-600 transition p-1"
+                      title="Save"
+                    >
+                      <FaSave className="text-lg" />
+                    </button>
+                    <button
+                      onClick={handleCancelEdit}
+                      className="text-slate-400 hover:text-red-500 transition p-1"
+                      title="Cancel"
+                    >
+                      <FaTimes className="text-lg" />
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex items-center gap-3">
+                      <FaCheckCircle className="text-emerald-500 text-lg" />
+                      <span className="text-slate-700">{todo.description}</span>
+                    </div>
 
-                <button className="text-slate-400  transition flex items-center gap-2">
-                  <FaEdit className="hover:text-blue-500" />
-                  <FaTrash
-                    className="hover:text-red-500"
-                    onClick={() => handleDelete(todo)}
-                  />
-                </button>
+                    <div className="text-slate-400 transition flex items-center gap-2">
+                      <button
+                        onClick={() => handleEdit(todo)}
+                        className="hover:text-blue-500 transition p-1"
+                        title="Edit"
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(todo)}
+                        className="hover:text-red-500 transition p-1"
+                        title="Delete"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  </>
+                )}
               </li>
             ))}
           </ul>
