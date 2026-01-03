@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
+import { toast, ToastContainer } from "react-toastify";
 import {
   FaCheckCircle,
   FaTrash,
@@ -35,6 +36,7 @@ export default function App() {
         description: text,
       });
       setTodos([...todos, response.data]);
+      toast.success("Todo added successfully!");
       setText("");
     } catch (error) {
       console.log(error.message);
@@ -44,6 +46,7 @@ export default function App() {
     try {
       await axios.delete(`http://localhost:3000/todos/delete/${todo.todo_id}`);
       setTodos(todos.filter((t) => t.todo_id !== todo.todo_id));
+      toast.success("Todo deleted successfully!");
     } catch (error) {
       console.log(error.message);
     }
@@ -52,6 +55,7 @@ export default function App() {
   const handleEdit = (todo) => {
     setEditingId(todo.todo_id);
     setEditText(todo.description);
+    toast.info("Editing todo...");
   };
 
   const handleCancelEdit = () => {
@@ -71,6 +75,7 @@ export default function App() {
           t.todo_id === todo.todo_id ? { ...t, description: editText } : t
         )
       );
+      toast.success("Todo updated successfully!");
       setEditingId(null);
       setEditText("");
     } catch (error) {
