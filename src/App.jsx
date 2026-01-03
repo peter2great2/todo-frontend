@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { format } from "date-fns";
 import {
   FaCheckCircle,
   FaTrash,
@@ -78,7 +79,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center px-4 flex-col justify-between">
+    <div className="min-h-screen bg-slate-100 flex items-center px-4 flex-col justify-between pt-3">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
         <div className="flex items-center gap-2 mb-6 justify-center">
           <FaClipboardList className="text-emerald-600 text-2xl" />
@@ -146,7 +147,7 @@ export default function App() {
                         </div>
                       </div>
                       <span className="text-slate-500 text-sm pl-6">
-                        {todo.created_at}
+                        {format(new Date(todo.created_at), "PPpp")}
                       </span>
                     </div>
 
