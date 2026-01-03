@@ -118,13 +118,13 @@ export default function App() {
             onChange={(e) => setText(e.target.value)}
             value={text}
             placeholder="What needs to be done?"
-            className="flex-1 px-4 py-2 border border-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="flex-1 px-4 py-2 border border-slate-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
           />
           <button
             onClick={handleAdd}
             className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
           >
-            Add
+            Add Task
           </button>
         </div>
         {loading ? (
@@ -137,11 +137,11 @@ export default function App() {
             </p>
           </div>
         ) : (
-          <ul className="space-y-3">
+          <ul className="space-y-2">
             {todos.map((todo) => (
               <li
                 key={todo.todo_id}
-                className="flex items-center justify-between p-3 border rounded-lg hover:bg-slate-50 transition"
+                className="flex items-center justify-between p-3 border-b border-slate-200 rounded-md border-t hover:bg-slate-50 transition"
               >
                 {editingId === todo.todo_id ? (
                   <div className="flex items-center gap-2 flex-1">
@@ -201,14 +201,14 @@ export default function App() {
                     <div className="text-slate-400 transition flex items-center gap-2">
                       <button
                         onClick={() => handleEdit(todo)}
-                        className="hover:text-blue-500 transition p-1"
+                        className="hover:text-blue-700 text-blue-500 transition p-1"
                         title="Edit"
                       >
                         <FaEdit />
                       </button>
                       <button
                         onClick={() => handleDelete(todo)}
-                        className="hover:text-red-500 transition p-1"
+                        className="hover:text-red-700 text-red-500 transition p-1"
                         title="Delete"
                       >
                         <FaTrash />
