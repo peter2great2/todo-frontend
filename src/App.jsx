@@ -20,7 +20,7 @@ export default function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/todos/all")
+      .get("http://localhost:3000/todos/all", { withCredentials: true })
       .then((res) => {
         setTodos(res.data);
         setLoading(false);
