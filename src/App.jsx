@@ -20,7 +20,7 @@ export default function App() {
 
   useEffect(() => {
     axios
-      .get("https://todo-backend-91wf.onrender.com/all", {
+      .get("https://todo-backend-91wf.onrender.com/todos/all", {
         withCredentials: true,
       })
       .then((res) => {
