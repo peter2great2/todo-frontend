@@ -39,7 +39,7 @@ export default function App() {
     }
     try {
       const response = await axios.post(
-        "http://localhost:3000/todos/add",
+        "https://todo-backend-91wf.onrender.com/todos/add",
         {
           description: text,
         },
@@ -54,7 +54,12 @@ export default function App() {
   };
   const handleDelete = async (todo) => {
     try {
-      await axios.delete(`http://localhost:3000/todos/delete/${todo.todo_id}`);
+      await axios.delete(
+        `https://todo-backend-91wf.onrender.com/todos/delete/${todo.todo_id}`,
+        {
+          withCredentials: true,
+        }
+      );
       setTodos(todos.filter((t) => t.todo_id !== todo.todo_id));
       toast.success("Todo deleted successfully!");
     } catch (error) {
@@ -77,7 +82,7 @@ export default function App() {
     if (!editText.trim()) return;
     try {
       const response = await axios.put(
-        `http://localhost:3000/todos/update/${todo.todo_id}`,
+        `https://todo-backend-91wf.onrender.com/todos/${todo.todo_id}`,
         { description: editText, completed: todo.completed }
       );
       setTodos(
@@ -95,8 +100,9 @@ export default function App() {
   const handleCompleted = async (todo) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/todos/update/${todo.todo_id}`,
-        { description: todo.description, completed: !todo.completed }
+        `https://todo-backend-91wf.onrender.com/todos/${todo.todo_id}`,
+        { description: todo.description, completed: !todo.completed },
+        { withCredentials: true }
       );
       setTodos(
         todos.map((t) =>
