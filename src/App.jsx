@@ -36,9 +36,13 @@ export default function App() {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:3000/todos/add", {
-        description: text,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/todos/add",
+        {
+          description: text,
+        },
+        { withCredentials: true }
+      );
       setTodos([...todos, response.data]);
       toast.success("Todo added successfully!");
       setText("");
