@@ -20,7 +20,9 @@ export default function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/todos/all", { withCredentials: true })
+      .get("https://todo-backend-91wf.onrender.com/all", {
+        withCredentials: true,
+      })
       .then((res) => {
         setTodos(res.data);
         setLoading(false);
