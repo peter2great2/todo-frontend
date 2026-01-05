@@ -82,8 +82,9 @@ export default function App() {
     if (!editText.trim()) return;
     try {
       const response = await axios.put(
-        `https://todo-backend-91wf.onrender.com/todos/${todo.todo_id}`,
-        { description: editText, completed: todo.completed }
+        `https://todo-backend-91wf.onrender.com/todos/update/${todo.todo_id}`,
+        { description: editText, completed: todo.completed },
+        { withCredentials: true }
       );
       setTodos(
         todos.map((t) =>
@@ -100,7 +101,7 @@ export default function App() {
   const handleCompleted = async (todo) => {
     try {
       const response = await axios.put(
-        `https://todo-backend-91wf.onrender.com/todos/${todo.todo_id}`,
+        `https://todo-backend-91wf.onrender.com/todos/update/${todo.todo_id}`,
         { description: todo.description, completed: !todo.completed },
         { withCredentials: true }
       );
