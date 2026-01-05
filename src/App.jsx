@@ -123,7 +123,7 @@ export default function App() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
         <div className="flex items-center gap-2 mb-6 justify-center">
           <FaClipboardList className="text-emerald-600 text-2xl" />
-          <h1 className="text-2xl font-bold text-slate-800">My Todos</h1>
+          <h1 className="text-2xl font-bold text-green-800">My Todos</h1>
         </div>
         <form
           className="flex gap-2 flex-col md:flex-row"
