@@ -212,7 +212,9 @@ export default function App() {
                         </div>
                       </div>
                       <span className="text-slate-500 text-xs pl-6">
-                        {format(new Date(todo.created_at), "PPpp")}
+                        {todo.created_at
+                          ? format(new Date(todo.created_at), "PPpp")
+                          : "No date"}
                       </span>
                     </div>
 
